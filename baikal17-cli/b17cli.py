@@ -4,14 +4,24 @@ from __future__ import unicode_literals, absolute_import
 import argparse
 import logging
 
+from baikal17.core import Story
+
+
+def start_story(path: str):
+    """ Init CLI UI for story and start adventure
+
+    :arg path: path to file with story
+    """
+    story_source = read_story(path)
+    adventure = CLIStory(story=story_source)
+    adventure.go()
+
 
 def read_story(path: str) -> list:
     """ Read story from the file
 
     :arg path: path to file with story
-    :type path: str
-
-    :return: list of strings
+    :return list of strings
     """
 
     try:
@@ -22,22 +32,15 @@ def read_story(path: str) -> list:
         exit()
 
 
-def start_story(path: str):
-    """ Docstring """
-    story = read_story(path)
-    adventure = CLIStory(story=story)
-    adventure.go()
-
-
 class CLIStory(object):
     """ Doc
     """
 
     def __init__(self, story: list):
-        self.story = story
+        self.story = Story(story)
 
     def go(self):
-        pass
+        print(self.story)
 
 
 if __name__ == '__main__':
